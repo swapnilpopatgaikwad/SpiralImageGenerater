@@ -218,6 +218,8 @@ namespace SpiralImageGenerater
 
         private static void DrawThoughtText(SKCanvas canvas, int width, int height, string thought, bool isMarathi)
         {
+            if (string.IsNullOrWhiteSpace(thought)) return;
+
             if (isMarathi)
                 DrawMarathiThought(canvas, width, height, thought);
             else
@@ -226,8 +228,6 @@ namespace SpiralImageGenerater
 
         private static void DrawEnglishThought(SKCanvas canvas, int width, int height, string thought)
         {
-            if (string.IsNullOrWhiteSpace(thought)) return;
-
             float textSize = 44f;
             float quoteSize = textSize * 2.15f;
             int maxWidth = (int)(width * 0.9);
@@ -306,8 +306,6 @@ namespace SpiralImageGenerater
 
         private static void DrawMarathiThought(SKCanvas canvas, int width, int height, string thought)
         {
-            if (string.IsNullOrWhiteSpace(thought)) return;
-
             float size = 44f;
             float horizontalMargin = width * 0.08f;  // 8% left-right margin
             int maxWidth = (int)(width - (horizontalMargin * 2));
