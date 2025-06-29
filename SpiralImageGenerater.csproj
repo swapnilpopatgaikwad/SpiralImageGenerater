@@ -8,7 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Baloo2-VariableFont_wght.ttf" />
+    <None Remove="Fonts\LibreBaskerville-Bold.ttf" />
+    <None Remove="Fonts\LibreBaskerville-Italic.ttf" />
+    <None Remove="Fonts\LibreBaskerville-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="3.119.0" />
+    <PackageReference Include="SkiaSharp.HarfBuzz" Version="3.119.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\Baloo2-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\LibreBaskerville-Bold.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\LibreBaskerville-Italic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\LibreBaskerville-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
