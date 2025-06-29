@@ -218,10 +218,103 @@ namespace SpiralImageGenerater
 
         private static void DrawThoughtText(SKCanvas canvas, int width, int height, string thought, bool isMarathi)
         {
+            if (isMarathi)
+                DrawMarathiThought(canvas, width, height, thought);
+            else
+                DrawEnglishThought(canvas, width, height, thought);
+        }
+
+        private static void DrawEnglishThought(SKCanvas canvas, int width, int height, string thought)
+        {
             if (string.IsNullOrWhiteSpace(thought)) return;
-            float size = 44f;
+
+            float textSize = 44f;
+            float quoteSize = textSize * 2.15f;
             int maxWidth = (int)(width * 0.9);
-            var typeface = isMarathi ? GetMarathiTypeface() : GetStylishTypeface();
+            var typeface = GetStylishTypeface();
+
+            using var font = new SKFont(typeface, textSize);
+            using var quoteFont = new SKFont(typeface, quoteSize);
+
+            using var paint = new SKPaint { Color = SKColors.White.WithAlpha(240), IsAntialias = true };
+            using var quotePaint = new SKPaint { Color = SKColors.White.WithAlpha(240), IsAntialias = true };
+            using var shadow = new SKPaint { Color = SKColors.Black.WithAlpha(120), IsAntialias = true };
+            using var quoteShadow = new SKPaint { Color = SKColors.Black.WithAlpha(120), IsAntialias = true };
+
+            using var shaper = new SKShaper(typeface);
+            var lines = WrapText(thought, font, shaper, maxWidth);
+
+            float lineSpacing = textSize * 1.6f;
+            float quoteLineHeight = quoteSize * 1.1f;
+            float totalTextHeight = lines.Count * lineSpacing;
+
+            float blockPadding = 20f;
+            float blockWidth = maxWidth + blockPadding * 2;
+            float blockHeight = totalTextHeight + quoteLineHeight + blockPadding * 2;
+
+            float blockX = (width - blockWidth) / 2f;
+            float blockY = (height - blockHeight) / 2f;
+
+            var backgroundPaint = new SKPaint
+            {
+                Color = new SKColor(255, 255, 255, 100),
+                IsAntialias = true
+            };
+            canvas.DrawRoundRect(new SKRoundRect(new SKRect(blockX, blockY, blockX + blockWidth, blockY + blockHeight), 20f, 20f), backgroundPaint);
+
+            // Opening Quote “ (top-left inside block)
+            string openQuote = "“";
+            var quoteOpenBlob = SKTextBlob.Create(openQuote, quoteFont);
+            float qx1 = blockX + 10;
+            float qy1 = blockY + quoteOpenBlob.Bounds.Height;
+            canvas.DrawText(quoteOpenBlob, qx1 + 2, qy1 + 2, quoteShadow);
+            canvas.DrawText(quoteOpenBlob, qx1, qy1, quotePaint);
+
+            float startY = blockY + quoteLineHeight + blockPadding;
+            SKRect lastLineBounds = SKRect.Empty;
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var shaped = shaper.Shape(lines[i], font);
+                var builder = new SKTextBlobBuilder();
+                var run = builder.AllocatePositionedRun(font, shaped.Codepoints.Length);
+                for (int j = 0; j < shaped.Codepoints.Length; j++)
+                {
+                    run.Glyphs[j] = (ushort)shaped.Codepoints[j];
+                    run.Positions[j] = shaped.Points[j];
+                }
+                var blob = builder.Build();
+                float x = width / 2f - blob.Bounds.MidX;
+                float y = startY + i * lineSpacing;
+
+                canvas.DrawText(blob, x + 2, y + 2, shadow);
+                canvas.DrawText(blob, x, y, paint);
+
+                if (i == lines.Count - 1)
+                    lastLineBounds = new SKRect(x, y - blob.Bounds.Height, x + blob.Bounds.Width, y);
+            }
+
+            // Closing Quote ” at the end of the last line
+            string closeQuote = "”";
+            var quoteCloseBlob = SKTextBlob.Create(closeQuote, quoteFont);
+            float qx2 = lastLineBounds.Right + 10;
+            float qy2 = lastLineBounds.Top + quoteCloseBlob.Bounds.Height * 0.9f;
+
+            canvas.DrawText(quoteCloseBlob, qx2 + 2, qy2 + 2, quoteShadow);
+            canvas.DrawText(quoteCloseBlob, qx2, qy2, quotePaint);
+        }
+
+        private static void DrawMarathiThought(SKCanvas canvas, int width, int height, string thought)
+        {
+            if (string.IsNullOrWhiteSpace(thought)) return;
+
+            float size = 44f;
+            float horizontalMargin = width * 0.08f;  // 8% left-right margin
+            int maxWidth = (int)(width - (horizontalMargin * 2));
+            var typeface = GetMarathiTypeface();
+
+            thought = "\u201C\u00A0" + "  " + thought +"  "+ "\u00A0\u201D"; // “ thought ”
+
             using var font = new SKFont(typeface, size);
             using var paint = new SKPaint { Color = SKColors.White.WithAlpha(240), IsAntialias = true };
             using var shadow = new SKPaint { Color = SKColors.Black.WithAlpha(120), IsAntialias = true };
@@ -231,9 +324,11 @@ namespace SpiralImageGenerater
             float spacing = size * 1.6f;
             float yStart = height / 2f - (lines.Count * spacing) / 2f + spacing / 2f;
 
-            for (int i = 0; i < lines.Count; i++)
+            float maxLineWidth = 0;
+            List<SKTextBlob> blobs = new();
+            foreach (var line in lines)
             {
-                var result = shaper.Shape(lines[i], font);
+                var result = shaper.Shape(line, font);
                 var builder = new SKTextBlobBuilder();
                 var run = builder.AllocatePositionedRun(font, result.Codepoints.Length);
                 for (int j = 0; j < result.Codepoints.Length; j++)
@@ -241,9 +336,28 @@ namespace SpiralImageGenerater
                     run.Glyphs[j] = (ushort)result.Codepoints[j];
                     run.Positions[j] = result.Points[j];
                 }
-                using var blob = builder.Build();
-                var bounds = blob.Bounds;
-                float x = width / 2f - bounds.MidX;
+                var blob = builder.Build();
+                blobs.Add(blob);
+                maxLineWidth = Math.Max(maxLineWidth, blob.Bounds.Width);
+            }
+
+            float blockPadding = 20f;
+            float blockWidth = maxLineWidth + blockPadding * 2;
+            float blockHeight = lines.Count * spacing + blockPadding * 2;
+            float blockX = (width - blockWidth) / 2f;
+            float blockY = yStart - spacing / 2f - blockPadding;
+
+            var backgroundPaint = new SKPaint
+            {
+                Color = new SKColor(255, 255, 255, 100),
+                IsAntialias = true
+            };
+            canvas.DrawRoundRect(new SKRoundRect(new SKRect(blockX, blockY, blockX + blockWidth, blockY + blockHeight), 20f, 20f), backgroundPaint);
+
+            for (int i = 0; i < blobs.Count; i++)
+            {
+                var blob = blobs[i];
+                float x = width / 2f - blob.Bounds.MidX;
                 float y = yStart + i * spacing;
                 canvas.DrawText(blob, x + 2, y + 2, shadow);
                 canvas.DrawText(blob, x, y, paint);
@@ -296,9 +410,9 @@ namespace SpiralImageGenerater
             Console.WriteLine("Generating gradient image with quote...");
 
             string brand = "@DevWithSwap";
-            //string thought = "प्रत्येक क्षणात आनंद शोधा आणि आयुष्य साजरे करा";
-            string thought = "Success is not final, failure is not fatal: It is the courage to continue that counts.";
-            bool isMarathi = false;
+            string thought = "प्रत्येक क्षणात आनंद शोधा आणि आयुष्य साजरे करा";
+            //string thought = "Success is not final, failure is not fatal:  fdf d f dfd f df df d fdf d fdf dfdfdffdff df d fd f d f d f df dfdfdfdfdf dfd fd dfdfd f d fd f d f df d ffdfdf ";
+            bool isMarathi = true;
 
             GradientGenerator.GenerateRandomGradientImages(
                 numberOfImages: 1,
