@@ -411,7 +411,7 @@ namespace SpiralImageGenerater
 
             string brand = "@DevWithSwap";
             string thought = "प्रत्येक क्षणात आनंद शोधा आणि आयुष्य साजरे करा";
-            //string thought = "Success is not final, failure is not fatal:  fdf d f dfd f df df d fdf d fdf dfdfdffdff df d fd f d f d f df dfdfdfdfdf dfd fd dfdfd f d fd f d f df d ffdfdf ";
+            //string thought = "Success is not final, failure is not fatal: It is the courage to continue that counts.";
             bool isMarathi = true;
 
             GradientGenerator.GenerateRandomGradientImages(
