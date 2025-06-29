@@ -19,45 +19,65 @@ namespace SpiralImageGenerater
     public static class ColorPalettes
     {
         public static SKColor[][] Palettes = new SKColor[][]
- {
-    // 🌈 Vibrant Neon
-    new[] { SKColor.Parse("#12c2e9"), SKColor.Parse("#c471ed"), SKColor.Parse("#f64f59") },
-    new[] { SKColor.Parse("#f7971e"), SKColor.Parse("#ffd200"), SKColor.Parse("#ff416c") },
+        {
+            // 🌈 Vibrant Neon
+            new[] { SKColor.Parse("#12c2e9"), SKColor.Parse("#c471ed"), SKColor.Parse("#f64f59") },
+            new[] { SKColor.Parse("#f7971e"), SKColor.Parse("#ffd200"), SKColor.Parse("#ff416c") },
 
-    // 🌌 Cyberpunk / Futuristic
-    new[] { SKColor.Parse("#0f0c29"), SKColor.Parse("#302b63"), SKColor.Parse("#24243e") },
-    new[] { SKColor.Parse("#833ab4"), SKColor.Parse("#fd1d1d"), SKColor.Parse("#fcb045") },
+            // 🌌 Cyberpunk / Futuristic
+            new[] { SKColor.Parse("#0f0c29"), SKColor.Parse("#302b63"), SKColor.Parse("#24243e") },
+            new[] { SKColor.Parse("#833ab4"), SKColor.Parse("#fd1d1d"), SKColor.Parse("#fcb045") },
 
-    // 🌅 Sunset Glow
-    new[] { SKColor.Parse("#ee9ca7"), SKColor.Parse("#ffdde1"), SKColor.Parse("#ff6a00") },
-    new[] { SKColor.Parse("#fcb045"), SKColor.Parse("#fd1d1d"), SKColor.Parse("#833ab4") },
+            // 🌅 Sunset Glow
+            new[] { SKColor.Parse("#ee9ca7"), SKColor.Parse("#ffdde1"), SKColor.Parse("#ff6a00") },
+            new[] { SKColor.Parse("#fcb045"), SKColor.Parse("#fd1d1d"), SKColor.Parse("#833ab4") },
 
-    // 🌿 Nature + Aqua
-    new[] { SKColor.Parse("#11998e"), SKColor.Parse("#38ef7d"), SKColor.Parse("#00c9ff") },
-    new[] { SKColor.Parse("#43cea2"), SKColor.Parse("#185a9d"), SKColor.Parse("#2af598") },
+            // 🌿 Nature + Aqua
+            new[] { SKColor.Parse("#11998e"), SKColor.Parse("#38ef7d"), SKColor.Parse("#00c9ff") },
+            new[] { SKColor.Parse("#43cea2"), SKColor.Parse("#185a9d"), SKColor.Parse("#2af598") },
 
-    // 🎨 Pastel Blend
-    new[] { SKColor.Parse("#fbc2eb"), SKColor.Parse("#a6c1ee"), SKColor.Parse("#d4fc79") },
-    new[] { SKColor.Parse("#fddb92"), SKColor.Parse("#d1fdff"), SKColor.Parse("#fcb69f") },
+            // 🎨 Pastel Blend
+            new[] { SKColor.Parse("#fbc2eb"), SKColor.Parse("#a6c1ee"), SKColor.Parse("#d4fc79") },
+            new[] { SKColor.Parse("#fddb92"), SKColor.Parse("#d1fdff"), SKColor.Parse("#fcb69f") },
 
-    // 💎 Luxury Gold
-    new[] { SKColor.Parse("#d4af37"), SKColor.Parse("#ffd700"), SKColor.Parse("#ffecb3") },
-    new[] { SKColor.Parse("#3a1c71"), SKColor.Parse("#d76d77"), SKColor.Parse("#ffaf7b") },
+            // 💎 Luxury Gold
+            new[] { SKColor.Parse("#d4af37"), SKColor.Parse("#ffd700"), SKColor.Parse("#ffecb3") },
+            new[] { SKColor.Parse("#3a1c71"), SKColor.Parse("#d76d77"), SKColor.Parse("#ffaf7b") },
 
-    // ☁️ AI / Cloud Themes
-    new[] { SKColor.Parse("#00d2ff"), SKColor.Parse("#3a7bd5"), SKColor.Parse("#00c6ff") },
-    new[] { SKColor.Parse("#6a11cb"), SKColor.Parse("#2575fc"), SKColor.Parse("#00f2fe") },
+            // ☁️ AI / Cloud Themes
+            new[] { SKColor.Parse("#00d2ff"), SKColor.Parse("#3a7bd5"), SKColor.Parse("#00c6ff") },
+            new[] { SKColor.Parse("#6a11cb"), SKColor.Parse("#2575fc"), SKColor.Parse("#00f2fe") },
 
-    // 🌌 Deep Space + Purple
-    new[] { SKColor.Parse("#000428"), SKColor.Parse("#004e92"), SKColor.Parse("#373B44") },
-    new[] { SKColor.Parse("#41295a"), SKColor.Parse("#2F0743"), SKColor.Parse("#734b6d") },
+            // 🌌 Deep Space + Purple
+            new[] { SKColor.Parse("#000428"), SKColor.Parse("#004e92"), SKColor.Parse("#373B44") },
+            new[] { SKColor.Parse("#41295a"), SKColor.Parse("#2F0743"), SKColor.Parse("#734b6d") },
 
-    // 🔥 Tetradic Vibe
-    new[] { SKColor.Parse("#ff6b6b"), SKColor.Parse("#ffe66d"), SKColor.Parse("#4ecdc4"), SKColor.Parse("#1a535c") },
+            // 🔥 Tetradic Vibe
+            new[] { SKColor.Parse("#ff6b6b"), SKColor.Parse("#ffe66d"), SKColor.Parse("#4ecdc4"), SKColor.Parse("#1a535c") },
 
-    // 💗 Analogous Romance
-    new[] { SKColor.Parse("#ff9a8b"), SKColor.Parse("#ff6b6b"), SKColor.Parse("#ff8e9d"), SKColor.Parse("#ff7eb3") }
- };
+            // 💗 Analogous Romance
+            new[] { SKColor.Parse("#ff9a8b"), SKColor.Parse("#ff6b6b"), SKColor.Parse("#ff8e9d"), SKColor.Parse("#ff7eb3") },
+
+            // 🧁 Soft Pastels
+            new[] { SKColor.Parse("#a1c4fd"), SKColor.Parse("#c2e9fb"), SKColor.Parse("#d4fc79") },
+            new[] { SKColor.Parse("#fddb92"), SKColor.Parse("#d1fdff"), SKColor.Parse("#e0c3fc") },
+
+            // 🍃 Earthy Tones
+            new[] { SKColor.Parse("#a8edea"), SKColor.Parse("#fed6e3"), SKColor.Parse("#dbe6e4") },
+            new[] { SKColor.Parse("#e6e9f0"), SKColor.Parse("#eef1f5"), SKColor.Parse("#f8f9fa") },
+
+            // ☕️ Warm Neutrals
+            new[] { SKColor.Parse("#e0c3fc"), SKColor.Parse("#8ec5fc"), SKColor.Parse("#cfd9df") },
+            new[] { SKColor.Parse("#f6e27a"), SKColor.Parse("#fbc687"), SKColor.Parse("#fbe3d0") },
+
+            // 🧘 Calm Blues & Grays
+            new[] { SKColor.Parse("#dee2e6"), SKColor.Parse("#ced4da"), SKColor.Parse("#adb5bd") },
+            new[] { SKColor.Parse("#89f7fe"), SKColor.Parse("#66a6ff"), SKColor.Parse("#91eae4") },
+
+            // 🌸 Sakura Blossoms
+            new[] { SKColor.Parse("#ffe1e8"), SKColor.Parse("#fad0c4"), SKColor.Parse("#ffd1ff") },
+            new[] { SKColor.Parse("#fddde6"), SKColor.Parse("#fbc8d4"), SKColor.Parse("#f7e9e3") }
+        };
 
 
         public static SKColor[] GetRandomPaletteColors(Random rand)
@@ -71,6 +91,48 @@ namespace SpiralImageGenerater
                 .Select(_ => new SKColor((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256)))
                 .ToArray();
         }
+        public static SKColor HSLToColor(float h, float s, float l)
+        {
+            h = h % 360;
+            float c = (1 - Math.Abs(2 * l - 1)) * s;
+            float x = c * (1 - Math.Abs((h / 60) % 2 - 1));
+            float m = l - c / 2;
+
+            float r = 0, g = 0, b = 0;
+
+            if (h < 60) { r = c; g = x; }
+            else if (h < 120) { r = x; g = c; }
+            else if (h < 180) { g = c; b = x; }
+            else if (h < 240) { g = x; b = c; }
+            else if (h < 300) { r = x; b = c; }
+            else { r = c; b = x; }
+
+            return new SKColor(
+                (byte)((r + m) * 255),
+                (byte)((g + m) * 255),
+                (byte)((b + m) * 255)
+            );
+        }
+        public static SKColor[] GenerateAnalogousPalette(Random rand, int count = 3)
+        {
+            float baseHue = (float)(rand.NextDouble() * 360); // hue: 0–360
+            return Enumerable.Range(0, count).Select(i =>
+            {
+                float hue = (baseHue + i * 20f) % 360; // 20° shift
+                return HSLToColor(hue, 0.6f, 0.7f);    // soft saturation/lightness
+            }).ToArray();
+        }
+
+        public static SKColor[] GenerateSoftPastelPalette(Random rand, int count = 3)
+        {
+            return Enumerable.Range(0, count).Select(_ =>
+            {
+                byte r = (byte)rand.Next(180, 256); // soft reds
+                byte g = (byte)rand.Next(180, 256); // soft greens
+                byte b = (byte)rand.Next(180, 256); // soft blues
+                return new SKColor(r, g, b);
+            }).ToArray();
+        }
     }
 
     public class GradientGenerator
@@ -81,7 +143,8 @@ namespace SpiralImageGenerater
             int height = 1080,
             GradientType gradientType = GradientType.Linear,
             bool useRandomColors = false,
-            int? colorCount = null)
+            int? colorCount = null,
+            bool isSoft = true)
         {
             string currentDir = Directory.GetCurrentDirectory();
             string projectPath = Directory.GetParent(currentDir)?.Parent?.Parent?.Parent?.FullName ?? currentDir;
@@ -93,9 +156,13 @@ namespace SpiralImageGenerater
 
             for (int i = 1; i <= numberOfImages; i++)
             {
-                SKColor[] colors = useRandomColors
-                    ? ColorPalettes.GenerateRandomColors(rand, colorCount ?? rand.Next(2, 6))
-                    : ColorPalettes.GetRandomPaletteColors(rand);
+                SKColor[] colors = isSoft 
+                    ? (useRandomColors
+                        ? ColorPalettes.GenerateSoftPastelPalette(rand, colorCount ?? rand.Next(2, 4))
+                        : ColorPalettes.GenerateAnalogousPalette(rand, colorCount ?? 3))
+                    : (useRandomColors
+                        ? ColorPalettes.GenerateRandomColors(rand, colorCount ?? rand.Next(2, 6))
+                        : ColorPalettes.GetRandomPaletteColors(rand));
 
                 using (SKSurface surface = SKSurface.Create(new SKImageInfo(width, height)))
                 {
@@ -160,7 +227,7 @@ namespace SpiralImageGenerater
                 }
             }
         }
-        
+
 
         private static SKColor GetMultiColorGradient(SKColor[] colors, float t)
         {
@@ -195,11 +262,12 @@ namespace SpiralImageGenerater
             Console.WriteLine("Starting image generation...");
 
             GradientGenerator.GenerateRandomGradientImages(
-                    numberOfImages: 30,
+                    numberOfImages: 5,
                     width: 1200,
                     height: 800,
                     gradientType: GradientType.Spiral,
-                    useRandomColors: false
+                    useRandomColors: true,
+                    isSoft:false
                 );
 
             Console.WriteLine("All images generated successfully!");
