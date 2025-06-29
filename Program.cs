@@ -106,9 +106,14 @@ namespace SpiralImageGenerater
         }
     }
 
+    public class ImageModel
+    {
+        public string ImagePath { get; set; }
+        public string ThoughtText { get; set; }
+    }
     public class GradientGenerator
     {
-        public static void GenerateRandomGradientImages(
+        public static List<ImageModel> GenerateRandomGradientImages(
          int numberOfImages,
          int width = 1920,
          int height = 1080,
@@ -117,20 +122,25 @@ namespace SpiralImageGenerater
          int? colorCount = null,
          bool isSoft = true,
          string brandText = "",
-         string thoughtText = "",
+         List<string> thoughtTexts = null,
          bool isMarathi = true)
 
         {
+            if (thoughtTexts is null) return [];
+
             string currentDir = Directory.GetCurrentDirectory();
             string projectPath = Directory.GetParent(currentDir)?.Parent?.Parent?.Parent?.FullName ?? currentDir;
             string outputDir = Path.Combine(projectPath, "GeneratedImages");
             Directory.CreateDirectory(outputDir);
 
             Random rand = new Random();
+
+            var images = new List<ImageModel>();
             var timer = System.Diagnostics.Stopwatch.StartNew();
 
             for (int i = 1; i <= numberOfImages; i++)
             {
+                var thoughtText = thoughtTexts.Count > 0 ? thoughtTexts[i - 1] : "";
                 SKColor[] colors = isSoft
                     ? (useRandomColors ? ColorPalettes.GenerateSoftPastelPalette(rand, colorCount ?? 3) : ColorPalettes.GenerateAnalogousPalette(rand, colorCount ?? 3))
                     : (useRandomColors ? ColorPalettes.GenerateRandomColors(rand, colorCount ?? 3) : ColorPalettes.GetRandomPaletteColors(rand));
@@ -147,9 +157,16 @@ namespace SpiralImageGenerater
                 string fileName = $"gradient_{gradientType}_{DateTime.Now:yyyyMMddHHmmss}.png";
                 using var stream = File.Create(Path.Combine(outputDir, fileName));
                 data.SaveTo(stream);
+
+                images.Add(new ImageModel()
+                {
+                    ImagePath = Path.Combine(outputDir, fileName),
+                    ThoughtText = thoughtText
+                });
             }
 
             Console.WriteLine($"Generated {numberOfImages} {gradientType} image(s) in {timer.Elapsed.TotalSeconds:F2}s");
+            return images;
         }
 
         private static void DrawSpiralGradient(SKCanvas canvas, int width, int height, SKColor[] colors, string brandText, string thoughtText, bool isMarathi)
@@ -311,7 +328,7 @@ namespace SpiralImageGenerater
             int maxWidth = (int)(width - (horizontalMargin * 2));
             var typeface = GetMarathiTypeface();
 
-            thought = "\u201C\u00A0" + "  " + thought +"  "+ "\u00A0\u201D"; // “ thought ”
+            thought = "\u201C\u00A0" + "  " + thought + "  " + "\u00A0\u201D"; // “ thought ”
 
             using var font = new SKFont(typeface, size);
             using var paint = new SKPaint { Color = SKColors.White.WithAlpha(240), IsAntialias = true };
@@ -407,22 +424,34 @@ namespace SpiralImageGenerater
         {
             Console.WriteLine("Generating gradient image with quote...");
 
-            string brand = "@DevWithSwap";
-            string thought = "प्रत्येक क्षणात आनंद शोधा आणि आयुष्य साजरे करा";
+            var brandType = BrandType.Mangabhara;
             //string thought = "Success is not final, failure is not fatal: It is the courage to continue that counts.";
             bool isMarathi = true;
+            var thoughts = new List<string>
+            {
+                "प्रत्येक क्षणात आनंद शोधा आणि आयुष्य साजरे करा",
+                "सपने पाहा, मेहनत करा, आणि त्यांना साकार करा",
+                "जीवनातले छोटे आनंद मोठे असतात",
+                "सकारात्मक विचारांनी जीवन उजळते"
+            };
+            var images = GradientGenerator.GenerateRandomGradientImages(
+                 numberOfImages: thoughts.Count,
+                 width: 1200,
+                 height: 800,
+                 gradientType: GradientType.Spiral,
+                 useRandomColors: false,
+                 isSoft: true,
+                 brandText: "@" + Enum.GetName(typeof(BrandType), brandType),
+                 thoughtTexts: thoughts,
+                 isMarathi: isMarathi
+             );
 
-            GradientGenerator.GenerateRandomGradientImages(
-                numberOfImages: 1,
-                width: 1200,
-                height: 800,
-                gradientType: GradientType.Spiral,
-                useRandomColors: false,
-                isSoft: true,
-                brandText: brand,
-                thoughtText: thought,
-                isMarathi: isMarathi
-            );
+            GoogleUploader.Init(brandType);
+
+            foreach (var imageModel in images)
+            {
+                GoogleUploader.SaveImageToDriveAndSheet(imageModel);
+            }
 
             Console.WriteLine("Done.");
             Console.ReadLine();

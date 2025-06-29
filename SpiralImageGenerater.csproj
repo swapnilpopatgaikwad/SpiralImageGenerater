@@ -15,6 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.70.0" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.69.0.3783" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.70.0.3819" />
     <PackageReference Include="SkiaSharp" Version="3.119.0" />
     <PackageReference Include="SkiaSharp.HarfBuzz" Version="3.119.0" />
   </ItemGroup>
